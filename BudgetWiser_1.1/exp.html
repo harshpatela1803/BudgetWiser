@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <link rel="stylesheet" href="css/bootstrap-responsive.css">
+        <link rel="stylesheet" href="css/custom-styles.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="css/component.css">
+
+        <script src="js/angular.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.js"></script>
+        <script src="js/angular-chart.js"></script>
+        <script src="js/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    </head>
+    <style type="text/css">
+	.highcharts-credits{
+		display: none;
+	}    	
+
+    </style>
+    <body ng-app="myApp" ng-controller="myCtrl">
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+
+        <!-- This code is taken from http://twitter.github.com/bootstrap/examples/hero.html -->
+        <div class="header-wrapper">
+            <div class="container">
+                <div class="logo">
+                    <h1>bizname</h1>
+                </div>
+            <div class="menu">
+                <div class="navbar">
+                        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                            <i class="fw-icon-th-list"></i>
+                        </a>
+                        <div class="nav-collapse collapse">
+                            <ul class="nav">
+                                <li>
+                                    <div class="site-name">
+                                        <h1>BUDGETWISER</h1>
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul class="nav navbar-right" style="float: right;position: fixed;margin-left: 500px;">
+                                <li>
+                                    <a href="#"></a>
+                                </li>
+                                <li>
+                                    <a href="#"></a>
+                                </li>
+
+                            </ul>
+
+                        </div><!--/.nav-collapse -->
+                </div>
+            </div>
+            </div>
+        </div>
+                <div class="featured-blocks">
+                    <div class="container-fluid">
+                        <div class="row-fluid">
+                            <div class="col-sm-8"  style="padding: 0px 2px;margin: 0px 2px;">
+                                <div class="block">
+                                        
+                                      <ul class="nav nav-tabs">
+                                        <li class="active"><a data-toggle="tab" href="#home">Income</a></li>
+                                        <li><a data-toggle="tab" href="#menu1">Financial Commitments</a></li>
+                                        <li><a data-toggle="tab" href="#menu2">Home</a></li>
+                                        <li><a data-toggle="tab" href="#menu3">Education </a></li>
+                                        <li><a data-toggle="tab" href="#menu4">Shopping</a></li>
+                                        <li><a data-toggle="tab" href="#menu5">Entertainment/Eating Out</a></li>
+                                        <li><a data-toggle="tab" href="#menu6" ng-click="pieChart()">Results</a></li>
+                                      </ul>
+
+                                      <div class="tab-content">
+                                        <div id="home" class="tab-pane fade in active"  style="text-align: left;padding-left: 50px;">
+                                          <br><br><br>
+                                          <div class="row">
+                                              <div class="col-sm-4">
+                                                <br><br>
+                                                <h4>
+                                                    <i class="fa fa-circle-o" aria-hidden="true"></i>
+                                                    Your take-home pay
+                                                </h4>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <h4>Frequency</h4>
+                                                  <br>
+                                                  <select class="form-control">
+                                                    <option value="1">Monthly</option>
+                                                    <option value="3">Quarterly</option>
+                                                    <option value="12">Yearly</option>
+                                                  </select>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <h4>Amount</h4>
+                                                  <br>
+                                                  <input type="number" min="0" class="form-control"  placeholder="$0" ng-model="income_take_amount">
+                                              </div>
+                                              <div class="col-sm-2" style="text-align: right;">
+                                                  <h4>Monthly Amount</h4>
+                                                  <br>
+                                                  <label for="Monthly"><h4>${{income_take_amount}}</h4></label>
+                                              </div> 
+                                          </div>
+                                          <div class="row">
+                                              <div class="col-sm-4">
+                                                <h4>
+                                                    <i class="fa fa-circle-o" aria-hidden="true"></i>
+                                                    Your partner's take-home pay
+                                                </h4>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <select class="form-control">
+                                                    <option value="1">Monthly</option>
+                                                    <option value="3">Quarterly</option>
+                                                    <option value="12">Yearly</option>
+                                                  </select>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <input type="number" min="0" class="form-control"  placeholder="$0"  ng-model="income_partner_amount_monthly">
+                                              </div>
+                                              <div class="col-sm-2" style="text-align: right;">
+                                                  <label for="Monthly"><h4>${{income_partner_amount_monthly}}</h4></label>
+                                              </div> 
+                                          </div>
+                                          <div class="row">
+                                              <div class="col-sm-4">
+                                                <h4>
+                                                    <i class="fa fa-circle-o" aria-hidden="true"></i>
+                                                    Bonuses/overtime
+                                                </h4>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <select class="form-control">
+                                                    <option value="1">Monthly</option>
+                                                    <option value="3">Quarterly</option>
+                                                    <option value="12">Yearly</option>
+                                                  </select>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <input type="number" min="0" class="form-control"  placeholder="$0" ng-model="income_bonus_amount">
+                                              </div>
+                                              <div class="col-sm-2" style="text-align: right;">
+                                                  <label for="Monthly"><h4>${{income_bonus_amount}}</h4></label>
+                                              </div> 
+                                          </div>
+                                          <div class="row">
+                                              <div class="col-sm-4">
+                                                <h4>
+                                                    <i class="fa fa-circle-o" aria-hidden="true"></i>
+                                                    Other
+                                                </h4>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <select class="form-control">
+                                                    <option value="1">Monthly</option>
+                                                    <option value="3">Quarterly</option>
+                                                    <option value="12">Yearly</option>
+                                                  </select>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <input type="number" min="0" class="form-control"  placeholder="$0" ng-model="income_other_amount">
+                                              </div>
+                                              <div class="col-sm-2" style="text-align: right;">
+                                                  <label for="Monthly"><h4>${{income_other_amount}}</h4></label>
+                                              </div> 
+                                          </div>
+                                          <div class="row">
+                                              <div class="col-sm-3" style="float: right; margin-top:10px;padding:20px;color: #2d6e84; ">
+                                                  
+                                                  <label for="Monthly" >
+                                                      <h4 style="background: #fff;padding:20px;"><span style="text-align: left;">
+                                                        Total=</span>
+                                                          <span style="float: right;">
+                                                         ${{
+                                                          	income_total_function(
+                                                          		 income_take_amount,income_partner_amount_monthly,income_bonus_amount,income_other_amount
+                                                          	)
+                                                          }}
+                                                            
+                                                          </span>
+                                                      </h4>
+                                                      <br>
+                                                  </label>
+                                              </div> 
+                                          </div>
+                                        </div>
+                                       
+
+
+                                       <div id="menu1" class="tab-pane fade in "  style="text-align: left;padding-left: 50px;">
+                                          <br><br><br>
+                                          <div class="row">
+                                              <div class="col-sm-4">
+                                                <br><br>
+                                                <h4>
+                                                    <i class="fa fa-circle-o" aria-hidden="true"></i>
+                                                    Rent / Mortgage
+                                                </h4>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <h4>Frequency</h4>
+                                                  <br>
+                                                  <select class="form-control">
+                                                    <option value="1">Monthly</option>
+                                                    <option value="3">Quarterly</option>
+                                                    <option value="12">Yearly</option>
+                                                  </select>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <h4>Amount</h4>
+                                                  <br>
+                                                  <input type="number" min="0" class="form-control"  placeholder="$0" ng-model="rent">
+                                              </div>
+                                              <div class="col-sm-2" style="text-align: right;">
+                                                  <h4>Monthly Amount</h4>
+                                                  <br>
+                                                  <label for="Monthly"><h4>${{rent}}</h4></label>
+                                              </div> 
+                                          </div>
+                                          <div class="row">
+                                              <div class="col-sm-4">
+                                                <h4>
+                                                    <i class="fa fa-circle-o" aria-hidden="true"></i>
+                                                    Car loan repayments
+                                                </h4>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <select class="form-control">
+                                                    <option value="1">Monthly</option>
+                                                    <option value="3">Quarterly</option>
+                                                    <option value="12">Yearly</option>
+                                                  </select>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <input type="number" min="0" class="form-control"  placeholder="$0"  ng-model="car">
+                                              </div>
+                                              <div class="col-sm-2" style="text-align: right;">
+                                                  <label for="Monthly"><h4>${{car}}</h4></label>
+                                              </div> 
+                                          </div>
+                                          <div class="row">
+                                              <div class="col-sm-4">
+                                                <h4>
+                                                    <i class="fa fa-circle-o" aria-hidden="true"></i>
+                                                    Other loan repayments
+                                                </h4>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <select class="form-control">
+                                                    <option value="1">Monthly</option>
+                                                    <option value="3">Quarterly</option>
+                                                    <option value="12">Yearly</option>
+                                                  </select>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <input type="number" min="0" class="form-control"  placeholder="$0" ng-model="loan">
+                                              </div>
+                                              <div class="col-sm-2" style="text-align: right;">
+                                                  <label for="Monthly"><h4>${{loan}}</h4></label>
+                                              </div> 
+                                          </div>
+                                          <div class="row">
+                                              <div class="col-sm-4">
+                                                <h4>
+                                                    <i class="fa fa-circle-o" aria-hidden="true"></i>
+                                                    Other
+                                                </h4>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <select class="form-control">
+                                                    <option value="1">Monthly</option>
+                                                    <option value="3">Quarterly</option>
+                                                    <option value="12">Yearly</option>
+                                                  </select>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <input type="number" min="0" class="form-control"  placeholder="$0" ng-model="other">
+                                              </div>
+                                              <div class="col-sm-2" style="text-align: right;">
+                                                  <label for="Monthly"><h4>${{other}}</h4></label>
+                                              </div> 
+                                          </div>
+                                          <div class="row">
+                                              <div class="col-sm-3" style="float: right; margin-top:10px;padding:20px;color: #2d6e84; ">
+                                                  
+                                                  <label for="Monthly" >
+                                                      <h4 style="background: #fff;padding:20px;"><span style="text-align: left;">
+                                                        Total=</span>
+                                                          <span style="float: right;">
+                                                             ${{
+                                                          	financial_total_function(
+                                                          		 rent,car,loan,other
+                                                          	)
+                                                          }}  
+                                                          </span>
+                                                      </h4>
+                                                      <br>
+                                                  </label>
+                                              </div> 
+                                          </div>
+                                          
+                                        </div>
+
+                                          <div id="menu2" class="tab-pane fade in "  style="text-align: left;padding-left: 50px;">
+                                          <br><br><br>
+                                          <div class="row">
+                                              <div class="col-sm-4">
+                                                <br><br>
+                                                <h4>
+                                                    <i class="fa fa-circle-o" aria-hidden="true"></i>
+                                                    Gas
+                                                </h4>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <h4>Frequency</h4>
+                                                  <br>
+                                                  <select class="form-control">
+                                                    <option value="1">Monthly</option>
+                                                    <option value="3">Quarterly</option>
+                                                    <option value="12">Yearly</option>
+                                                  </select>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <h4>Amount</h4>
+                                                  <br>
+                                                  <input type="number" min="0" class="form-control"  placeholder="$0" ng-model="gas">
+                                              </div>
+                                              <div class="col-sm-2" style="text-align: right;">
+                                                  <h4>Monthly Amount</h4>
+                                                  <br>
+                                                  <label for="Monthly"><h4>${{gas}}</h4></label>
+                                              </div> 
+                                          </div>
+                                          <div class="row">
+                                              <div class="col-sm-4">
+                                                <h4>
+                                                    <i class="fa fa-circle-o" aria-hidden="true"></i>
+                                                    Electricity
+                                                </h4>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <select class="form-control">
+                                                    <option value="1">Monthly</option>
+                                                    <option value="3">Quarterly</option>
+                                                    <option value="12">Yearly</option>
+                                                  </select>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <input type="number" min="0" class="form-control"  placeholder="$0"  ng-model="electricity">
+                                              </div>
+                                              <div class="col-sm-2" style="text-align: right;">
+                                                  <label for="Monthly"><h4>${{electricity}}</h4></label>
+                                              </div> 
+                                          </div>
+                                          <div class="row">
+                                              <div class="col-sm-4">
+                                                <h4>
+                                                    <i class="fa fa-circle-o" aria-hidden="true"></i>
+                                                    Internet
+                                                </h4>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <select class="form-control">
+                                                    <option value="1">Monthly</option>
+                                                    <option value="3">Quarterly</option>
+                                                    <option value="12">Yearly</option>
+                                                  </select>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <input type="number" min="0" class="form-control"  placeholder="$0" ng-model="internet">
+                                              </div>
+                                              <div class="col-sm-2" style="text-align: right;">
+                                                  <label for="Monthly"><h4>${{internet}}</h4></label>
+                                              </div> 
+                                          </div>
+                                          <div class="row">
+                                              <div class="col-sm-4">
+                                                <h4>
+                                                    <i class="fa fa-circle-o" aria-hidden="true"></i>
+                                                    Water
+                                                </h4>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <select class="form-control">
+                                                    <option value="1">Monthly</option>
+                                                    <option value="3">Quarterly</option>
+                                                    <option value="12">Yearly</option>
+                                                  </select>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <input type="number" min="0" class="form-control"  placeholder="$0" ng-model="Water">
+                                              </div>
+                                              <div class="col-sm-2" style="text-align: right;">
+                                                  <label for="Monthly"><h4>${{Water}}</h4></label>
+                                              </div> 
+                                          </div>
+                                          <div class="row">
+                                              <div class="col-sm-3" style="float: right; margin-top:10px;padding:20px;color: #2d6e84; ">
+                                                  
+                                                  <label for="Monthly" >
+                                                      <h4 style="background: #fff;padding:20px;"><span style="text-align: left;">
+                                                        Total=</span>
+                                                          <span style="float: right;">
+                                                          ${{
+                                                          	home_total_function(
+                                                          		 gas,electricity,internet,Water
+                                                          	)
+                                                          }}  
+                                                          </span>
+                                                      </h4>
+                                                      <br>
+                                                  </label>
+                                              </div> 
+                                          </div>
+                                          
+                                        </div>
+                                        <div id="menu3" class="tab-pane fade in "  style="text-align: left;padding-left: 50px;">
+                                          <br><br><br>
+                                          <div class="row">
+                                              <div class="col-sm-4">
+                                                <br><br>
+                                                <h4>
+                                                    <i class="fa fa-circle-o" aria-hidden="true"></i>
+                                                    School Fees
+                                                </h4>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <h4>Frequency</h4>
+                                                  <br>
+                                                  <select class="form-control">
+                                                    <option value="1">Monthly</option>
+                                                    <option value="3">Quarterly</option>
+                                                    <option value="12">Yearly</option>
+                                                  </select>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <h4>Amount</h4>
+                                                  <br>
+                                                  <input type="number" min="0" class="form-control"  placeholder="$0" ng-model="fees">
+                                              </div>
+                                              <div class="col-sm-2" style="text-align: right;">
+                                                  <h4>Monthly Amount</h4>
+                                                  <br>
+                                                  <label for="Monthly"><h4>${{fees}}</h4></label>
+                                              </div> 
+                                          </div>
+                                          <div class="row">
+                                              <div class="col-sm-4">
+                                                <h4>
+                                                    <i class="fa fa-circle-o" aria-hidden="true"></i>
+                                                    Health insurance 
+                                                </h4>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <select class="form-control">
+                                                    <option value="1">Monthly</option>
+                                                    <option value="3">Quarterly</option>
+                                                    <option value="12">Yearly</option>
+                                                  </select>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <input type="number" min="0" class="form-control"  placeholder="$0"  ng-model="insurance">
+                                              </div>
+                                              <div class="col-sm-2" style="text-align: right;">
+                                                  <label for="Monthly"><h4>${{insurance}}</h4></label>
+                                              </div> 
+                                          </div>
+                                          <div class="row">
+                                              <div class="col-sm-4">
+                                                <h4>
+                                                    <i class="fa fa-circle-o" aria-hidden="true"></i>
+                                                    Doctor
+                                                </h4>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <select class="form-control">
+                                                    <option value="1">Monthly</option>
+                                                    <option value="3">Quarterly</option>
+                                                    <option value="12">Yearly</option>
+                                                  </select>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <input type="number" min="0" class="form-control"  placeholder="$0" ng-model="doctor">
+                                              </div>
+                                              <div class="col-sm-2" style="text-align: right;">
+                                                  <label for="Monthly"><h4>${{doctor}}</h4></label>
+                                              </div> 
+                                          </div>
+                                          <div class="row">
+                                              <div class="col-sm-4">
+                                                <h4>
+                                                    <i class="fa fa-circle-o" aria-hidden="true"></i>
+                                                    Medicines/Pharmacy
+                                                </h4>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <select class="form-control">
+                                                    <option value="1">Monthly</option>
+                                                    <option value="3">Quarterly</option>
+                                                    <option value="12">Yearly</option>
+                                                  </select>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <input type="number" min="0" class="form-control"  placeholder="$0" ng-model="pharmacy">
+                                              </div>
+                                              <div class="col-sm-2" style="text-align: right;">
+                                                  <label for="Monthly"><h4>${{pharmacy}}</h4></label>
+                                              </div> 
+                                          </div>
+                                          <div class="row">
+                                              <div class="col-sm-3" style="float: right; margin-top:10px;padding:20px;color: #2d6e84; ">
+                                                  
+                                                  <label for="Monthly" >
+                                                      <h4 style="background: #fff;padding:20px;"><span style="text-align: left;">
+                                                        Total=</span>
+                                                          <span style="float: right;">
+                                                           ${{
+                                                          	education_total_function(
+                                                          		fees,insurance,doctor,pharmacy
+                                                          	)
+                                                          }} 
+                                                          </span>
+                                                      </h4>
+                                                      <br>
+                                                  </label>
+                                              </div> 
+                                          </div>
+                                          
+                                        </div>
+                                         <div id="menu4" class="tab-pane fade in "  style="text-align: left;padding-left: 50px;">
+                                          <br><br><br>
+                                          <div class="row">
+                                              <div class="col-sm-4">
+                                                <br><br>
+                                                <h4>
+                                                    <i class="fa fa-circle-o" aria-hidden="true"></i>
+                                                    Supermarket
+                                                </h4>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <h4>Frequency</h4>
+                                                  <br>
+                                                  <select class="form-control">
+                                                    <option value="1">Monthly</option>
+                                                    <option value="3">Quarterly</option>
+                                                    <option value="12">Yearly</option>
+                                                  </select>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <h4>Amount</h4>
+                                                  <br>
+                                                  <input type="number" min="0" class="form-control"  placeholder="$0" ng-model="market">
+                                              </div>
+                                              <div class="col-sm-2" style="text-align: right;">
+                                                  <h4>Monthly Amount</h4>
+                                                  <br>
+                                                  <label for="Monthly"><h4>${{market}}</h4></label>
+                                              </div> 
+                                          </div>
+                                          <div class="row">
+                                              <div class="col-sm-4">
+                                                <h4>
+                                                    <i class="fa fa-circle-o" aria-hidden="true"></i>
+                                                    Car Maintainance
+                                                </h4>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <select class="form-control">
+                                                    <option value="1">Monthly</option>
+                                                    <option value="3">Quarterly</option>
+                                                    <option value="12">Yearly</option>
+                                                  </select>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <input type="number" min="0" class="form-control"  placeholder="$0"  ng-model="main">
+                                              </div>
+                                              <div class="col-sm-2" style="text-align: right;">
+                                                  <label for="Monthly"><h4>${{main}}</h4></label>
+                                              </div> 
+                                          </div>
+                                          <div class="row">
+                                              <div class="col-sm-4">
+                                                <h4>
+                                                    <i class="fa fa-circle-o" aria-hidden="true"></i>
+                                                    Clothing/shoes
+                                                </h4>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <select class="form-control">
+                                                    <option value="1">Monthly</option>
+                                                    <option value="3">Quarterly</option>
+                                                    <option value="12">Yearly</option>
+                                                  </select>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <input type="number" min="0" class="form-control"  placeholder="$0" ng-model="shoes">
+                                              </div>
+                                              <div class="col-sm-2" style="text-align: right;">
+                                                  <label for="Monthly"><h4>${{shoes}}</h4></label>
+                                              </div> 
+                                          </div>
+                                          <div class="row">
+                                              <div class="col-sm-4">
+                                                <h4>
+                                                    <i class="fa fa-circle-o" aria-hidden="true"></i>
+                                                    Petrol
+                                                </h4>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <select class="form-control">
+                                                    <option value="1">Monthly</option>
+                                                    <option value="3">Quarterly</option>
+                                                    <option value="12">Yearly</option>
+                                                  </select>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <input type="number" min="0" class="form-control"  placeholder="$0" ng-model="Petrol">
+                                              </div>
+                                              <div class="col-sm-2" style="text-align: right;">
+                                                  <label for="Monthly"><h4>${{Petrol}}</h4></label>
+                                              </div> 
+                                          </div>
+                                          <div class="row">
+                                              <div class="col-sm-3" style="float: right; margin-top:10px;padding:20px;color: #2d6e84; ">
+                                                  
+                                                  <label for="Monthly" >
+                                                      <h4 style="background: #fff;padding:20px;"><span style="text-align: left;">
+                                                        Total=</span>
+                                                          <span style="float: right;">
+                                                            ${{
+                                                          	shopping_total_function(
+                                                          		market,main,shoes,Petrol
+                                                          	)
+                                                          }}
+                                                          </span>
+                                                      </h4>
+                                                      <br>
+                                                  </label>
+                                              </div> 
+                                          </div>
+                                          
+                                        </div>
+                                        <div id="menu5" class="tab-pane fade in "  style="text-align: left;padding-left: 50px;">
+                                          <br><br><br>
+                                          <div class="row">
+                                              <div class="col-sm-4">
+                                                <br><br>
+                                                <h4>
+                                                    <i class="fa fa-circle-o" aria-hidden="true"></i>
+                                                    Holidays/clubs
+                                                </h4>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <h4>Frequency</h4>
+                                                  <br>
+                                                  <select class="form-control">
+                                                    <option value="1">Monthly</option>
+                                                    <option value="3">Quarterly</option>
+                                                    <option value="12">Yearly</option>
+                                                  </select>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <h4>Amount</h4>
+                                                  <br>
+                                                  <input type="number" min="0" class="form-control"  placeholder="$0" ng-model="club1">
+                                              </div>
+                                              <div class="col-sm-2" style="text-align: right;">
+                                                  <h4>Monthly Amount</h4>
+                                                  <br>
+                                                  <label for="Monthly"><h4>${{club1}}</h4></label>
+                                              </div> 
+                                          </div>
+                                          <div class="row">
+                                              <div class="col-sm-4">
+                                                <h4>
+                                                    <i class="fa fa-circle-o" aria-hidden="true"></i>
+                                                    Gym/movies
+                                                </h4>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <select class="form-control">
+                                                    <option value="1">Monthly</option>
+                                                    <option value="3">Quarterly</option>
+                                                    <option value="12">Yearly</option>
+                                                  </select>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <input type="number" min="0" class="form-control"  placeholder="$0"  ng-model="gym1">
+                                              </div>
+                                              <div class="col-sm-2" style="text-align: right;">
+                                                  <label for="Monthly"><h4>${{gym1}}</h4></label>
+                                              </div> 
+                                          </div>
+                                          <div class="row">
+                                              <div class="col-sm-4">
+                                                <h4>
+                                                    <i class="fa fa-circle-o" aria-hidden="true"></i>
+                                                    Restaurants/snacks
+                                                </h4>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <select class="form-control">
+                                                    <option value="1">Monthly</option>
+                                                    <option value="3">Quarterly</option>
+                                                    <option value="12">Yearly</option>
+                                                  </select>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <input type="number" min="0" class="form-control"  placeholder="$0" ng-model="snakcs1">
+                                              </div>
+                                              <div class="col-sm-2" style="text-align: right;">
+                                                  <label for="Monthly"><h4>${{snakcs1}}</h4></label>
+                                              </div> 
+                                          </div>
+                                          <div class="row">
+                                              <div class="col-sm-4">
+                                                <h4>
+                                                    <i class="fa fa-circle-o" aria-hidden="true"></i>
+                                                    other
+                                                </h4>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <select class="form-control">
+                                                    <option value="1">Monthly</option>
+                                                    <option value="3">Quarterly</option>
+                                                    <option value="12">Yearly</option>
+                                                  </select>
+                                              </div>
+                                              <div class="col-sm-2">
+                                                  <input type="number" min="0" class="form-control"  placeholder="$0" ng-model="Otherss1">
+                                              </div>
+                                              <div class="col-sm-2" style="text-align: right;">
+                                                  <label for="Monthly"><h4>${{Otherss1}}</h4></label>
+                                              </div> 
+                                          </div>
+                                          <div class="row">
+                                              <div class="col-sm-3" style="float: right; margin-top:10px;padding:20px;color: #2d6e84; ">
+                                                  
+                                                  <label for="Monthly" >
+                                                      <h4 style="background: #fff;padding:20px;"><span style="text-align: left;">
+                                                        Total=</span>
+                                                          <span style="float: right;">
+                                                            ${{
+                                                          	eating_total_function(
+                                                          		club1,gym1,snakcs1,Otherss1
+                                                          	)
+                                                          }}
+                                                          </span>
+                                                      </h4>
+                                                      <br>
+                                                  </label>
+                                              </div> 
+                                          </div>
+                                        </div>
+                                        <div id="menu6" class="tab-pane fade in " ng-init="pie_fn()" ng-click="pie_fn()"  style="text-align: left;padding-left: 50px;background: #fff;">
+                                          	<br><br><br>
+                                          	<div class="row">
+                                            	 <div class="col-sm-5">
+                                            	 	<h4  style="padding: 100px 0px;">
+                                            	 		{{Results_function(income_total,financial_total,home_total,education_total,shopping_total,eating_total)}}
+                                            	 	</h4>
+                                            	 </div>
+                                            	 <div class="col-sm-6">
+                                            	 	<!-- <div id="Frequency_data" style="height: 300px; width: 280px; margin:0px auto 50px;border: 1px solid #000;"></div> -->
+                                            	 	<canvas id="pie" class="chart chart-pie"
+													  chart-data="data" chart-labels="labels" chart-options="options" 
+													    style="width: 320px;
+													    height: 320px;
+													    padding: 0px 10px 50px;">
+													</canvas> 
+                                            	 </div>
+												
+                                            	 <br><br><br>
+                                            	 
+                                        	</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3" style="padding: 0px 2px;margin: 0px 2px;">
+	                            <div class="block">
+	                        		<div class="row container-fluid">
+	                        			<div class="col-sm-12" style="margin-top:-10px; ">
+	                        				
+	                        				<div class="col-sm-10" style="border-bottom:2px solid #fff; padding-bottom: 5px;">
+	                        					<h4><b>Summary</b></h4>
+	                        				</div>
+	                        				<br><br>
+	                        				<div class="pull-left col-sm-10" style="text-align: left;">
+	                        					<div class="row" style="padding: 5px;background: #ccc;color: #fff;"><h5><b>Income</b></h5></div>
+	                        					<div class="row" style="padding: 5px;">
+	                        						<div class="pull-left">
+	                        							<i class="fa fa-cog" aria-hidden="true"></i>&nbsp;Income :
+	                        						</div>
+	                        						<div class="pull-right" style="text-align: right;padding:0px 10px; ">
+	                        							${{income_total}}
+	                        						</div>
+	                        					</div>
+	                        					<div class="row" style="padding: 5px;">
+	                        						<div class="pull-left">
+	                        							<h4><b>Total Summary :</b></h4>
+	                        						</div>
+	                        						<div class="pull-right" style="text-align: right;padding:0px 10px; ">
+	                        							<b>${{income_total}}</b>
+	                        						</div>
+	                        					</div>
+	                        					<div class="row" style="padding: 5px;background: #ccc;color: #fff;"><h5><b>Outstndings</b></h5></div>
+	                        					<div class="row" style="padding: 5px;">
+	                        						<div class="pull-left">
+	                        							<i class="fa fa-cog" aria-hidden="true"></i>&nbsp;Financial comm:
+	                        						</div>
+	                        						<div class="pull-right" style="text-align: right;padding:0px 10px; ">
+	                        							${{financial_total}}
+	                        						</div>
+	                        					</div>
+	                        					<div class="row" style="padding: 5px;">
+	                        						<div class="pull-left">
+	                        							<i class="fa fa-cog" aria-hidden="true"></i>&nbsp;Home:
+	                        						</div>
+	                        						<div class="pull-right" style="text-align: right;padding:0px 10px; ">
+	                        							${{home_total}}
+	                        						</div>
+	                        					</div>
+	                        					<div class="row" style="padding: 5px;">
+	                        						<div class="pull-left">
+	                        							<i class="fa fa-cog" aria-hidden="true"></i>&nbsp;Education:
+	                        						</div>
+	                        						<div class="pull-right" style="text-align: right;padding:0px 10px; ">
+	                        							${{education_total}}
+	                        						</div>
+	                        					</div>
+	                        					<div class="row" style="padding: 5px;">
+	                        						<div class="pull-left">
+	                        							<i class="fa fa-cog" aria-hidden="true"></i>&nbsp;Shopping:
+	                        						</div>
+	                        						<div class="pull-right" style="text-align: right;padding:0px 10px; ">
+	                        							${{shopping_total}}
+	                        						</div>
+	                        					</div>
+	                        					<div class="row" style="padding: 5px;">
+	                        						<div class="pull-left">
+	                        							<i class="fa fa-cog" aria-hidden="true"></i>&nbsp;Entertainment:
+	                        						</div>
+	                        						<div class="pull-right" style="text-align: right;padding:0px 10px; ">
+	                        							${{eating_total}}
+	                        						</div>
+	                        					</div>
+	                        					
+	                        					<div class="row" style="padding: 5px;">
+	                        						<div class="pull-left">
+	                        							<h4><b>Total Outstandings :</b></h4>
+	                        						</div>
+	                        						<div class="pull-right" style="text-align: right;padding:0px 10px; ">
+	                        							<h4><b>${{financial_total + home_total + education_total + shopping_total + eating_total}}</b></h4>
+	                        						</div>
+	                        					</div>	
+
+	                        					<div class="row " style="padding: 5px;margin-top:80px;">
+	                        						<div class="pull-left">
+	                        							<h3><b>What's Left :</b></h3>
+	                        						</div>
+	                        						<div class="pull-right" style="text-align: right;padding:0px 10px; ">
+	                        							<h3><b>${{results_total}}</b></h3>
+	                        							<h6><b>per month</b></h6>
+	                        							{{Total_outstandings}}
+	                        						</div>
+	                        					</div>	
+	                        				</div>
+	                        				
+	                        			</div>
+	                        		</div>
+	                            </div>
+                            </div>                          
+                        </div>
+                    </div>
+
+                <div class="footer-wrapper">
+                    <div class="container">
+                        <div class="copy-rights">
+                            Copyright (c) BudgetWiser. All rights reserved. Designed by :  <strong><a href="#">  Aditya Pandit</a></strong>
+                        </div>
+                    </div>
+                </div>
+        
+
+        
+    <script src="js/jquery-1.9.1.js"></script> 
+    <script src="js/bootstrap.js"></script>
+	    
+	<script>
+	var app = angular.module("myApp", ["chart.js"]);
+	app.controller("myCtrl",  ['$scope', '$window', function($scope, $window) {
+	    $scope.income_take_amount = 0;
+	    $scope.income_partner_amount_monthly = 0;
+	    $scope.income_bonus_amount = 0;
+	    $scope.income_other_amount = 0;
+	    $scope.income_monthly_amount = 0;
+	    $scope.rent = 0;
+	    $scope.car = 0;
+	    $scope.loan = 0;
+	    $scope.other = 0;
+	     $scope.gas = 0; 
+	     $scope.electricity = 0; 
+	     $scope.Water = 0; 
+	     $scope.internet = 0;
+	     $scope.fees = 0;
+	     $scope.insurance = 0;
+	     $scope.doctor = 0;
+	     $scope.pharmacy = 0;
+	     $scope.market = 0;
+	     $scope.shoes = 0; 
+	     $scope.main = 0; 
+	     $scope.Petrol = 0;  
+	     $scope.club1 = 0;  
+	     $scope.gym1 = 0;  
+	     $scope.snakcs1 = 0;  
+	     $scope.Otherss1 = 0;  
+
+	  	 $scope.income_total=0;
+	  	 $scope.income_total_function= function(a,b,c,d){
+	  	 	if(a=="")
+	  	 	{
+	  	 		a=0;
+	  	 	}
+	  	 	if(b=="")
+	  	 	{
+	  	 		b=0;
+	  	 	}
+	  	 	if(c=="")
+	  	 	{
+	  	 		c=0;
+	  	 	}
+	  	 	if(d=="")
+	  	 	{
+	  	 		d=0;
+	  	 	}
+
+	  	 	$scope.income_total=( a + b + c + d );
+	  	 	return $scope.income_total;
+	  	 }
+	  	 $scope.financial_total=0;
+	  	 $scope.financial_total_function= function(a,b,c,d){
+	  	 	if(a=="")
+	  	 	{
+	  	 		a=0;
+	  	 	}
+	  	 	if(b=="")
+	  	 	{
+	  	 		b=0;
+	  	 	}
+	  	 	if(c=="")
+	  	 	{
+	  	 		c=0;
+	  	 	}
+	  	 	if(d=="")
+	  	 	{
+	  	 		d=0;
+	  	 	}
+
+	  	 	$scope.financial_total=( a + b + c + d );
+	  	 	return $scope.financial_total;
+	  	 }
+	  	 $scope.home_total=0;
+	  	 $scope.home_total_function= function(a,b,c,d){
+	  	 	if(a=="")
+	  	 	{
+	  	 		a=0;
+	  	 	}
+	  	 	if(b=="")
+	  	 	{
+	  	 		b=0;
+	  	 	}
+	  	 	if(c=="")
+	  	 	{
+	  	 		c=0;
+	  	 	}
+	  	 	if(d=="")
+	  	 	{
+	  	 		d=0;
+	  	 	}
+
+	  	 	$scope.home_total=( a + b + c + d );
+	  	 	return $scope.home_total;
+	  	 }
+	  	 $scope.education_total=0;
+	  	 $scope.education_total_function= function(a,b,c,d){
+	  	 	if(a=="")
+	  	 	{
+	  	 		a=0;
+	  	 	}
+	  	 	if(b=="")
+	  	 	{
+	  	 		b=0;
+	  	 	}
+	  	 	if(c=="")
+	  	 	{
+	  	 		c=0;
+	  	 	}
+	  	 	if(d=="")
+	  	 	{
+	  	 		d=0;
+	  	 	}
+
+	  	 	$scope.education_total=( a + b + c + d );
+	  	 	return $scope.education_total;
+	  	 }
+	  	 $scope.shopping_total=0;
+	  	 $scope.shopping_total_function= function(a,b,c,d){
+	  	 	if(a=="")
+	  	 	{
+	  	 		a=0;
+	  	 	}
+	  	 	if(b=="")
+	  	 	{
+	  	 		b=0;
+	  	 	}
+	  	 	if(c=="")
+	  	 	{
+	  	 		c=0;
+	  	 	}
+	  	 	if(d=="")
+	  	 	{
+	  	 		d=0;
+	  	 	}
+
+	  	 	$scope.shopping_total=( a + b + c + d );
+	  	 	return $scope.shopping_total;
+	  	 }
+	  	 $scope.eating_total=0;
+	  	 $scope.eating_total_function= function(a,b,c,d){
+	  	 	if(a=="")
+	  	 	{
+	  	 		a=0;
+	  	 	}
+	  	 	if(b=="")
+	  	 	{
+	  	 		b=0;
+	  	 	}
+	  	 	if(c=="")
+	  	 	{
+	  	 		c=0;
+	  	 	}
+	  	 	if(d=="")
+	  	 	{
+	  	 		d=0;
+	  	 	}
+
+	  	 	$scope.eating_total=( a + b + c + d );
+	  	 	return $scope.eating_total;
+	  	 }
+	  	 
+
+	  	 $scope.results_total=0;
+	  	 $scope.result_msg="You are spending what you earn.Your life would be less stressful if you saved a little for a rainy day";
+	  	 $scope.Results_function = function(a,b,c,d,e,f){
+	  	 	$scope.results_total=
+	  	 	(a-(b + c + d + e + f));
+
+	  	 	if(a < ( b + c + d + e + f )){
+	  	 		return $scope.result_msg="You are spending $" + $scope.results_total + " per month more than you earn.Time to take action!";
+	  	 	}else
+	  	 	if(a > ( b + c + d + e + f )){
+	  	 		return $scope.result_msg="You are spending $" + $scope.results_total + " per month less than you earn.Congratulations!";
+	  	 	}
+	  	 	else{
+	  	 		return $scope.result_msg="You are spending what you earn.Your life would be less stressful if you saved a little for a rainy day";
+	  	 	}
+	  	 }
+	  	 $scope.Total_outstandings= 0;
+	  	 $scope.financial_total_per= 0;
+		 $scope.home_total_per= 0;
+	     $scope.education_total_per= 0;	
+	     $scope.shopping_total_per= 0;
+	     $scope.eating_out_total_per= 0;	  	 			  	 
+		 $scope.Total_outstandings= $scope.financial_total + $scope.home_total + $scope.education_total + $scope.shopping_total + $scope.eating_total;
+		  	 
+	  	 // $scope.financial_total_per=(($scope.financial_total/$scope.Total_outstandings)*100);
+	  	 // //$scope.financial_total_per=$scope.Total_outstandings;
+	  	 // $scope.home_total_per=(($scope.home_total/$scope.Total_outstandings)*100).toFixed(2);
+	  	 // $scope.education_total_per=(($scope.education_total/$scope.Total_outstandings)*100).toFixed(2);
+	  	 // $scope.shopping_total_per=(($scope.shopping_total/$scope.Total_outstandings)*100).toFixed(2);
+	  	 // $scope.eating_out_total_per=(($scope.eating_total/$scope.Total_outstandings)*100).toFixed(2);
+	  	 $scope.labels=[];
+	  	 $scope.data=[];
+	  	 $scope.pieChart= function(){
+
+		  	if($scope.financial_total>0 || $scope.home_total>0 || $scope.education_total>0 || $scope.shopping_total>0 || $scope.eating_total >0){
+				$scope.labels= ['Financial Commitments','Home','Education','Shopping','Entertainment'];
+				$scope.data= [$scope.financial_total, $scope.home_total, $scope.education_total, $scope.shopping_total, $scope.eating_total];        
+		  	}
+	  	 } 
+	}]);
+	</script>
+    </body>
+</html>
